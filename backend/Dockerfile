@@ -9,7 +9,8 @@ RUN pip install --no-cache-dir -r requirements.txt
 # Copy application code
 COPY . .
 
-# Cloud Run injects PORT env var; default to 8000
+# Set PYTHONPATH so `regai_agent` and `app` packages resolve correctly
+ENV PYTHONPATH=/app
 ENV PORT=8000
 EXPOSE 8000
 
