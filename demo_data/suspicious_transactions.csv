@@ -1,0 +1,44 @@
+transaction_id,amount,vendor,timestamp,customer_name,kyc_status
+TXN-S001,9500.00,Shell Holdings LLC,2024-01-15 09:12:00,Marcus Webb,pending
+TXN-S002,9750.00,Shell Holdings LLC,2024-01-15 09:45:00,Marcus Webb,pending
+TXN-S003,9200.00,Shell Holdings LLC,2024-01-15 10:18:00,Marcus Webb,pending
+TXN-S004,9900.00,Shell Holdings LLC,2024-01-15 11:02:00,Marcus Webb,pending
+TXN-S005,9100.00,Shell Holdings LLC,2024-01-15 11:33:00,Marcus Webb,pending
+TXN-S006,9600.00,Shell Holdings LLC,2024-01-15 12:05:00,Marcus Webb,pending
+TXN-S007,9850.00,Shell Holdings LLC,2024-01-15 12:44:00,Marcus Webb,pending
+TXN-S008,15000.00,Apex Consulting,2024-01-16 08:30:00,Diana Frost,failed
+TXN-S009,22000.00,Apex Consulting,2024-01-16 09:15:00,Diana Frost,failed
+TXN-S010,18500.00,Apex Consulting,2024-01-16 10:00:00,Diana Frost,failed
+TXN-S011,31000.00,Apex Consulting,2024-01-16 10:45:00,Diana Frost,failed
+TXN-S012,1200.00,FastPay Logistics,2024-01-17 14:00:00,Kevin Marsh,unknown
+TXN-S013,1200.00,FastPay Logistics,2024-01-17 14:05:00,Kevin Marsh,unknown
+TXN-S014,1200.00,FastPay Logistics,2024-01-17 14:10:00,Kevin Marsh,unknown
+TXN-S015,1200.00,FastPay Logistics,2024-01-17 14:15:00,Kevin Marsh,unknown
+TXN-S016,1200.00,FastPay Logistics,2024-01-17 14:20:00,Kevin Marsh,unknown
+TXN-S017,5500.00,Phantom Imports Ltd,2024-01-18 11:00:00,Rachel Stone,pending
+TXN-S017,5500.00,Phantom Imports Ltd,2024-01-18 11:00:00,Rachel Stone,pending
+TXN-S018,8800.00,Phantom Imports Ltd,2024-01-18 13:30:00,Rachel Stone,pending
+TXN-S018,8800.00,Phantom Imports Ltd,2024-01-18 13:30:00,Rachel Stone,pending
+TXN-S019,3000.00,Phantom Imports Ltd,2024-01-18 15:00:00,Rachel Stone,pending
+TXN-S019,3000.00,Phantom Imports Ltd,2024-01-18 15:00:00,Rachel Stone,pending
+TXN-S020,75000.00,Offshore Capital Group,2024-01-19 09:00:00,Victor Crane,failed
+TXN-S021,120000.00,Offshore Capital Group,2024-01-19 09:30:00,Victor Crane,failed
+TXN-S022,9300.00,Nexus Trade Co,2024-01-20 10:00:00,Lena Park,unknown
+TXN-S023,9700.00,Nexus Trade Co,2024-01-20 10:30:00,Lena Park,unknown
+TXN-S024,9450.00,Nexus Trade Co,2024-01-20 11:00:00,Lena Park,unknown
+TXN-S025,9800.00,Nexus Trade Co,2024-01-20 11:30:00,Lena Park,unknown
+TXN-S026,2000.00,Global Wire Services,2024-01-21 08:00:00,Tom Briggs,pending
+TXN-S027,2000.00,Global Wire Services,2024-01-21 08:02:00,Tom Briggs,pending
+TXN-S028,2000.00,Global Wire Services,2024-01-21 08:04:00,Tom Briggs,pending
+TXN-S029,2000.00,Global Wire Services,2024-01-21 08:06:00,Tom Briggs,pending
+TXN-S030,2000.00,Global Wire Services,2024-01-21 08:08:00,Tom Briggs,pending
+TXN-S031,11500.00,Meridian Exports,2024-01-22 14:00:00,Sara Quinn,failed
+TXN-S032,11500.00,Meridian Exports,2024-01-22 14:00:00,Sara Quinn,failed
+TXN-S033,9100.00,Dark Matter Trading,2024-01-23 09:00:00,James Holt,unknown
+TXN-S034,9400.00,Dark Matter Trading,2024-01-23 09:20:00,James Holt,unknown
+TXN-S035,9600.00,Dark Matter Trading,2024-01-23 09:40:00,James Holt,unknown
+TXN-S036,9800.00,Dark Matter Trading,2024-01-23 10:00:00,James Holt,unknown
+TXN-S037,9200.00,Dark Matter Trading,2024-01-23 10:20:00,James Holt,unknown
+TXN-S038,50000.00,Cayman Bridge Fund,2024-01-24 11:00:00,Nina Cross,failed
+TXN-S039,50000.00,Cayman Bridge Fund,2024-01-24 11:05:00,Nina Cross,failed
+TXN-S040,50000.00,Cayman Bridge Fund,2024-01-24 11:10:00,Nina Cross,failed
