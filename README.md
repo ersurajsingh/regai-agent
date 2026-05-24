@@ -60,29 +60,29 @@ RegAI treats **observability as a first-class feature**, not an afterthought. Ev
 ┌──────────────────────────────▼──────────────────────────────────────┐
 │                      FastAPI Backend (:8000)                        │
 │                                                                     │
-│  ┌─────────────────────────────────────────────────────────────┐   │
-│  │                    Agent Pipeline                           │   │
-│  │                                                             │   │
-│  │  CSV Upload → Compliance Analysis → Evaluation →           │   │
-│  │  Self-Reflection → Trace-Aware Analysis                     │   │
-│  └──────────────────────┬──────────────────────────────────────┘   │
+│  ┌─────────────────────────────────────────────────────────────┐    │
+│  │                    Agent Pipeline                           │    │
+│  │                                                             │    │
+│  │  CSV Upload → Compliance Analysis → Evaluation →            │    │
+│  │  Self-Reflection → Trace-Aware Analysis                     │    │
+│  └──────────────────────┬──────────────────────────────────────┘    │
 │                         │                                           │
-│  ┌──────────────────────▼──────────────────────────────────────┐   │
-│  │              Google ADK root_agent                          │   │
-│  │                                                             │   │
-│  │  Tools:                                                     │   │
-│  │  ├── detect_aml_patterns      (structuring, CTR, round #s) │   │
-│  │  ├── detect_duplicate_invoices (exact + near-duplicate)    │   │
-│  │  ├── detect_missing_kyc       (FATF Rec 10 / BSA CIP)      │   │
-│  │  └── detect_suspicious_activity (velocity spikes)          │   │
-│  └──────────────────────┬──────────────────────────────────────┘   │
+│  ┌──────────────────────▼──────────────────────────────────────┐    │
+│  │              Google ADK root_agent                          │    │
+│  │                                                             │    │
+│  │  Tools:                                                     │    │
+│  │  ├── detect_aml_patterns      (structuring, CTR, round #s)  │    │
+│  │  ├── detect_duplicate_invoices (exact + near-duplicate)     │    │
+│  │  ├── detect_missing_kyc       (FATF Rec 10 / BSA CIP)       │    │
+│  │  └── detect_suspicious_activity (velocity spikes)           │    │
+│  └──────────────────────┬──────────────────────────────────────┘    │
 │                         │                                           │
-│  ┌──────────┐  ┌────────▼────────┐  ┌──────────────────────────┐  │
-│  │ MongoDB  │  │  Gemini 2.0     │  │  Arize Phoenix           │  │
-│  │  Atlas   │  │  Flash API      │  │  (OTLP traces)           │  │
-│  │          │  │  (Reasoning +   │  │  Phoenix MCP Server      │  │
-│  │  Memory  │  │   Risk Scoring) │  │  (IDE introspection)     │  │
-│  └──────────┘  └─────────────────┘  └──────────────────────────┘  │
+│  ┌──────────┐  ┌────────▼────────┐  ┌──────────────────────────┐    │
+│  │ MongoDB  │  │  Gemini 2.0     │  │  Arize Phoenix           │    │
+│  │  Atlas   │  │  Flash API      │  │  (OTLP traces)           │    │
+│  │          │  │  (Reasoning +   │  │  Phoenix MCP Server      │    │
+│  │  Memory  │  │   Risk Scoring) │  │  (IDE introspection)     │    │
+│  └──────────┘  └─────────────────┘  └──────────────────────────┘    │
 └─────────────────────────────────────────────────────────────────────┘
 ```
 
@@ -413,21 +413,6 @@ curl -X POST http://localhost:8000/api/v1/compliance/reflect \
 
 ---
 
-## Hackathon Alignment — Arize Track
-
-| Requirement | RegAI Implementation |
-|-------------|---------------------|
-| Gemini-powered agent | `gemini-flash-latest` via `google.genai` SDK |
-| Google ADK architecture | `root_agent` with 4 modular `FunctionTool`s |
-| Arize Phoenix tracing | `phoenix.otel.register(auto_instrument=True, batch=True)` |
-| OpenInference spans | CHAIN / TOOL / LLM / EVAL / REFLECT span kinds |
-| Phoenix MCP | `.gemini/settings.json` with `@arizeai/phoenix-mcp@latest` |
-| Self-improving agent | Reflection + Trace-Aware loops with MongoDB memory |
-| Observability-driven governance | 4-dimension evaluation scoring per analysis |
-| Production deployment | Dockerfiles + Cloud Run ready |
-
----
-
 ## API Reference
 
 | Method | Endpoint | Description |
@@ -468,24 +453,9 @@ Contributions are welcome. Please:
 4. Push to the branch (`git push origin feature/your-feature`)
 5. Open a Pull Request
 
-### Suggested Repo Topics
+### Repo Topics
 
 `ai-compliance` `aml-detection` `gemini` `google-adk` `arize-phoenix` `opentelemetry` `fastapi` `nextjs` `mongodb` `fintech` `llm-observability` `ai-governance` `hackathon`
-
----
-
-## Pre-Push Checklist
-
-- [ ] `backend/.env` is in `.gitignore` and not staged
-- [ ] `frontend/.env.local` is in `.gitignore` and not staged
-- [ ] `.gemini/settings.json` is in `.gitignore` and not staged
-- [ ] `backend/.env.example` has only placeholder values
-- [ ] `curl http://localhost:8000/health` returns `{"status":"ok"}`
-- [ ] `curl -X POST http://localhost:8000/api/v1/sessions/` returns a session_id
-- [ ] Frontend loads at `http://localhost:3000`
-- [ ] Observability timeline loads at `http://localhost:3000/observe`
-- [ ] Phoenix traces appear in `https://app.phoenix.arize.com`
-- [ ] `demo_data/` folder contains all three CSV files
 
 ---
 
