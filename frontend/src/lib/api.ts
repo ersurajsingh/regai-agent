@@ -9,7 +9,7 @@ import type {
 } from "./types";
 
 const api = axios.create({
-  baseURL: process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000/api/v1",
+  baseURL: process.env.NEXT_PUBLIC_API_URL || "https://regai-backend-5370394522.us-central1.run.app/api/v1",
 });
 
 export async function createSession(): Promise<{ session_id: string; token: string }> {
