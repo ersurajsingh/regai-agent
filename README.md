@@ -11,6 +11,21 @@
 
 ---
 
+## 🚀 Live Demo
+
+| | URL |
+|---|---|
+| **Frontend (Observability UI)** | https://regai-agent-one.vercel.app/observe |
+| **Backend API (Swagger docs)** | https://regai-backend-5370394522.us-central1.run.app/docs |
+| **Health check** | https://regai-backend-5370394522.us-central1.run.app/health |
+| **Source code** | https://github.com/ersurajsingh/regai-agent |
+
+> Drop `demo_data/mixed_transactions.csv` on the observe page to see the full pipeline run.
+
+---
+
+---
+
 ## The Problem
 
 Financial institutions process millions of transactions daily. Compliance teams manually review flagged transactions for AML (Anti-Money Laundering), KYC violations, duplicate invoices, and suspicious patterns. This process is:
