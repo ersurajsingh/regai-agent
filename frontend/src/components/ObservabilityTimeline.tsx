@@ -55,10 +55,11 @@ export default function ObservabilityTimeline({ data }: Props) {
       <div className="flex border-b border-gray-800 bg-gray-900/40 overflow-x-auto">
         {TABS.map((t) => {
           const hasData =
-            t.id === "spans"       ? data.spans.length > 0 :
-            t.id === "analysis"    ? !!data.analysis :
-            t.id === "evaluation"  ? !!data.evaluation :
-            t.id === "reflection"  ? !!data.reflection :
+            t.id === "spans"            ? data.spans.length > 0 :
+            t.id === "analysis"         ? !!data.analysis :
+            t.id === "evaluation"       ? !!data.evaluation :
+            t.id === "reflection"       ? !!data.reflection :
+            t.id === "gemini-reasoning" ? !!data.analysis :
             !!data.trace_aware;
 
           return (
@@ -393,32 +394,83 @@ function Empty({ message }: { message: string }) {
 function GeminiReasoningPanel({ analysis }: { analysis: NonNullable<TimelineData["analysis"]> }) {
   return (
     <div className="space-y-4">
-      {/* Gemini Prompt */}
-      {analysis.gemini_prompt && (
-        <div className="rounded-lg border border-gray-800 bg-gray-900/60 p-3">
-          <p className="text-[10px] text-gray-500 uppercase tracking-wide mb-1">
-            Gemini Prompt
-          </p>
-          <p className="text-xs text-gray-300 break-all whitespace-pre-wrap">{analysis.gemini_prompt}</p>
-        </div>
-      )}
 
-      {/* Gemini Raw Response */}
-      {analysis.gemini_raw_response && (
-        <div className="rounded-lg border border-gray-800 bg-gray-900/60 p-3">
-          <p className="text-[10px] text-gray-500 uppercase tracking-wide mb-1">
-            Gemini Raw Response
-          </p>
-          <p className="text-xs text-gray-300 break-all whitespace-pre-wrap">{analysis.gemini_raw_response}</p>
-        </div>
-      )}
+      {/* Model info */}
+      <div className="flex items-center gap-3 px-3 py-2 rounded-lg border border-violet-500/20 bg-violet-500/5">
+        <span className="text-[10px] font-bold text-violet-400 uppercase tracking-wide">Model</span>
+        <span className="text-xs font-mono text-violet-300">gemini-flash-latest</span>
+        <span className="ml-auto text-[10px] text-gray-500">via Google ADK · 4 tool calls</span>
+      </div>
 
-      {/* Fallback if no Gemini data */}
-      {!analysis.gemini_prompt && !analysis.gemini_raw_response && (
-        <div className="text-center py-8 text-gray-500">
-          <p>No Gemini reasoning data available for this analysis.</p>
+      {/* Gemini explanation — the LLM's reasoning output */}
+      <div className="rounded-lg border border-gray-800 bg-gray-900/60 p-3">
+        <p className="text-[10px] text-gray-500 uppercase tracking-wide mb-2">
+          Gemini Compliance Reasoning
+        </p>
+        <p className="text-xs text-gray-300 leading-relaxed">{analysis.explanation}</p>
+      </div>
+
+      {/* Tool call results — what detectors returned to Gemini */}
+      <div>
+        <p className="text-[10px] text-gray-500 uppercase tracking-wide mb-2">
+          Tool Call Results ({analysis.issues.length} issues detected)
+        </p>
+        <div className="space-y-2">
+          {analysis.issues.map((issue, i) => (
+            <div key={i} className="rounded-lg border border-gray-800 bg-gray-900/60 p-3 text-xs">
+              <div className="flex items-center gap-2 mb-1">
+                <span className={`px-1.5 py-0.5 rounded text-[10px] font-bold border ${
+                  issue.severity === "critical" ? "bg-red-500/10 text-red-300 border-red-500/30" :
+                  issue.severity === "high" ? "bg-orange-500/10 text-orange-300 border-orange-500/30" :
+                  issue.severity === "medium" ? "bg-amber-500/10 text-amber-300 border-amber-500/30" :
+                  "bg-gray-700 text-gray-400 border-gray-600"
+                }`}>{issue.severity}</span>
+                <span className="font-mono text-gray-300 capitalize">{issue.category.replace(/_/g, " ")}</span>
+                {issue.regulation && (
+                  <span className="ml-auto text-[10px] text-indigo-400 truncate max-w-[180px]">{issue.regulation}</span>
+                )}
+              </div>
+              <p className="text-gray-400">{issue.description}</p>
+              {issue.row_indices && issue.row_indices.length > 0 && (
+                <p className="text-gray-600 mt-1">Rows: {issue.row_indices.slice(0, 8).join(", ")}{issue.row_indices.length > 8 ? "..." : ""}</p>
+              )}
+            </div>
+          ))}
         </div>
-      )}
+      </div>
+
+      {/* Gemini recommendations — the LLM's output */}
+      <div>
+        <p className="text-[10px] text-gray-500 uppercase tracking-wide mb-2">
+          Gemini Recommendations
+        </p>
+        <div className="space-y-2">
+          {analysis.recommendations.map((rec, i) => (
+            <div key={i} className="flex items-start gap-2 text-xs rounded-lg border border-gray-800 bg-gray-900/60 p-3">
+              <span className="flex-shrink-0 h-5 w-5 rounded-full bg-violet-500/20 text-violet-300 flex items-center justify-center text-[10px] font-bold">
+                {rec.priority}
+              </span>
+              <div>
+                <p className="text-gray-200 font-medium">{rec.action}</p>
+                <p className="text-gray-500 mt-0.5">{rec.rationale}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* Risk summary */}
+      <div className="grid grid-cols-2 gap-3">
+        <div className="rounded-lg border border-gray-800 bg-gray-900/60 p-3 text-center">
+          <p className="text-[10px] text-gray-500 uppercase mb-1">Risk Level</p>
+          <RiskBadge level={analysis.risk_level} />
+        </div>
+        <div className="rounded-lg border border-gray-800 bg-gray-900/60 p-3 text-center">
+          <p className="text-[10px] text-gray-500 uppercase mb-1">Risk Score</p>
+          <span className="text-2xl font-bold text-gray-100">{analysis.risk_score}<span className="text-xs text-gray-500">/100</span></span>
+        </div>
+      </div>
+
     </div>
   );
 }
